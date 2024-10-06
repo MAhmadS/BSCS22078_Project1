@@ -4,7 +4,7 @@ const FooterLinks = () => {
   return (
     <div className="mt-5 text-sm flex flex-col-reverse items-center gap-3 lg:flex-row whitespace-nowrap">
       <div className="flex gap-3 flex-col sm:flex-row items-center">
-        <span>&copy; 2024 Airbnb, Inc</span>
+        <span>&copy; 2024 Rent It, Inc</span>
         <div className="flex gap-3">
           <span className="hidden sm:inline">·</span>
           <a href="/" className="hover:underline">

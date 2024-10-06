@@ -19,7 +19,7 @@ const FooterSections = () => {
     <div className="flex flex-col sm:flex-row sm:justify-between">
       <Section title={"Support"} links={support} />
       <Section title={"Hosting"} links={hosting} />
-      <Section title={"Airbnb"} links={airbnb} />
+      <Section title={"Rent It"} links={airbnb} />
     </div>
   );
 };
