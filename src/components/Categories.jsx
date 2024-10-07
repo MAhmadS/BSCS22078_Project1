@@ -10,7 +10,7 @@ const Categories = () => {
     { name: "Amazing views", img: "/imgs/cat_icons/4.jpg" },
     { name: "Historic homes", img: "/imgs/cat_icons/5.jpg" },
   ];
-  return <Tabs tabItems={tabItems} />;
+  return <Tabs tabItems={tabItems} setSelCategory = {setSelCategory} />;
 };
 
 export default Categories;
