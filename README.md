@@ -1,8 +1,17 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Rent It: an Airbnb Inspired WebApp
 
-Currently, two official plugins are available:
+### Description
+This project is a web app that is inspired by ***Airbnb***, made using ***REACT, Tailwind and Vite***.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Setup Instructions:
+This project is made using **Vite, React and Tailwind CSS**, 
+To run my code, following are instructions:
+
+- Make Sure you have node install
+- Open the folder where you have placed this code in **Terminal**.
+- Run command ```npm install``` to install all dependencies
+- After this, use ```npm run dev``` to run as developer
+    
+### Design Decisions:
+This project is not direct clone of ***Airbnb*** instead it is inspired from that, so somethings are different design wise.
