@@ -11,6 +11,7 @@ const Tabs = (props) => {
         {props.tabItems.map((tabItem, index) => (
           <button
             key={index}
+            onClick={() => props.setSelCategory(tabItem.name)}
             className="flex flex-col items-center bg-transparent text-gray-500 border-b-2 box-border focus:border-black focus:text-black hover:text-black pb-3 whitespace-nowrap"
           >
             {tabItem.img ? (
