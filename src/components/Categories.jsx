@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Tabs from "./UI components/Tabs";
 
 const Categories = () => {
-    const [selCategory, setSelCategory] = useState()
+    const [selCategory, setSelCategory] = useState("");
   const tabItems = [
     { name: "Icons", img: "/imgs/cat_icons/1.webp" },
     { name: "Rooms", img: "/imgs/cat_icons/2.jpg" },
