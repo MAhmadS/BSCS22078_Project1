@@ -7,7 +7,9 @@ const Header = () => {
     <header>
       <div className="items-center flex">
         <img src="../src/assets/imgs/logo.png" alt="Rent It Logo" width={80} />
-        <span className="text-base sm:text-2xl text-sky-600 font-bold hidden sm:flex">Rent It</span>
+        <span className="text-base sm:text-2xl text-sky-600 font-bold hidden sm:flex">
+          Rent It
+        </span>
         <div className="justify-self-center ml-auto hidden lg:flex">
           <Navbar />
         </div>
@@ -15,7 +17,6 @@ const Header = () => {
           <SideHeader />
         </div>
       </div>
-
     </header>
   );
 };

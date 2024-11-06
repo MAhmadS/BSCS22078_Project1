@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SideHeader = () => {
   const [dropdown, setDropdown] = useState(false);
   return (
     <ul className="flex items-center gap-2">
       <li className="p-3 rounded-3xl hover:bg-gray-100 hidden sm:inline">
-        <a href="/">Rent your home</a>
+        <Link to="/">Rent your home</Link>
       </li>
       <li className="p-3 rounded-3xl hover:bg-gray-100 hidden sm:inline">
         <button className="flex items-center">
@@ -58,27 +59,27 @@ const SideHeader = () => {
           </svg>
           {dropdown && (
             <div className="text-sm transition- flex flex-col p-3 text-white text-right bg-sky-500 shadow-gray-500 shadow-md absolute top-16 right-10">
-              <a
+              <Link
                 className="hover:text-black border-white w-full border-b lg:hidden"
-                href="/"
+                to="/"
               >
                 Home
-              </a>
-              <a
+              </Link>
+              <Link
                 className="hover:text-black w-full border-white border-b lg:hidden"
-                href="/"
+                to="/"
               >
                 Experiences
-              </a>
-              <a
+              </Link>
+              <Link
                 className="hover:text-black w-full border-white border-b lg:hidden"
-                href="/"
+                to="/"
               >
                 Online Experiences
-              </a>
-              <a
+              </Link>
+              <Link
                 className="hover:text-black w-full border-white border-b flex justify-end gap-1"
-                href="/"
+                to="/"
               >
                 <span>Signup</span>
                 <svg
@@ -90,8 +91,8 @@ const SideHeader = () => {
                 >
                   <path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z" />
                 </svg>
-              </a>
-              <a className="hover:text-black w-full flex justify-end gap-1" href="/">
+              </Link>
+              <Link className="hover:text-black w-full flex justify-end gap-1" to="/">
                 <span>Login</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +103,7 @@ const SideHeader = () => {
                 >
                   <path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z" />
                 </svg>
-              </a>
+              </Link>
             </div>
           )}
         </button>
