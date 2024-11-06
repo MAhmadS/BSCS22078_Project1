@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Card = (props) => {
   // img: "/public/imgs/card_imgs/1.webp",
@@ -8,7 +9,7 @@ const Card = (props) => {
   // pricePerNight: "$190",
   // rating: "3",
   return (
-    <div className="flex flex-col w-max">
+    <Link className="flex flex-col w-full" to={`/listings/${props.item.id}`}>
       <img
         className="rounded-2xl w-screen sm:w-60 sm:h-60 h-full object-cover"
         src={props.item.img}
@@ -16,7 +17,7 @@ const Card = (props) => {
       />
       <div className="flex flex-col w-max px-2">
         <span className="font-bold text-sm sm:text-base flex justify-between items-center mt-2">
-          {props.item.title}
+          {props.item.title}, {props.item.location}
         </span>
         <span className="font-normal text-xs flex items-center">{`⭐${props.item.rating}/5`}</span>
         <span className="text-xs sm:text-sm font-bold mt-1">
@@ -31,7 +32,7 @@ const Card = (props) => {
           per night
         </span>
       </div>
-    </div>
+    </Link>
   );
 };
 
