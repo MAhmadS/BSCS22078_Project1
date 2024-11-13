@@ -21,7 +21,7 @@ const ListingDetails = () => {
     getItem();
   }, []);
 
-  console.log(listItem)
+  console.log(listItem);
 
   return (
     // id: 9,
@@ -33,14 +33,47 @@ const ListingDetails = () => {
     // pricePerNight: "$500",
     // rating: "5",
     <>
+      {!listItem && <div>Loading...</div>}
       {listItem && (
-        <div>
-          <img src={listItem.img} alt={listItem.title + "'s Icon"} />
-          <div>{listItem.type} in {listItem.title}, {listItem.location}</div>
-          <div>{listItem.info.guests} guests · {listItem.info.bedrooms} bedrooms · {listItem.info.bathrooms} bathrooms</div>
-          <div>{listItem.rating} stars</div>
-          <div>{listItem.pricePerNight} night</div>
-          <Link to="/book/:id">Book Now</Link>
+        <div className="grid md:grid-cols-2 py-5 justify-center items-center gap-5">
+          <img
+            className="border-sky-500 border-2 p-0.5 ml-auto justify-self-right h-full max-h-96"
+            src={listItem.img}
+            alt={listItem.title + "'s Icon"}
+          />
+          <div className="m-auto w-full xl:w-3/4">
+            <div className="text-2xl xl:text-3xl">{listItem.type} </div>
+            <div className="font-bold xl:text-lg">
+              in {listItem.title}, {listItem.location}
+            </div>
+            <div className="text-lg">⭐ {listItem.rating} <span className="text-sm">/ 5</span></div>
+            <ul className="font-bold xl:text-2xl p-2 bg-gray-200 my-3">
+              Details:
+              <li className="font-normal text-sm xl:text-lg list-disc py-0.5 mx-5">
+                {listItem.info.bedrooms} Bedrooms
+              </li>
+              <li className="font-normal text-sm xl:text-lg list-disc py-0.5 mx-5">
+                {listItem.info.bathrooms} Bathrooms
+              </li>
+              <li className="font-normal text-sm xl:text-lg list-disc py-0.5 mx-5">
+                {listItem.info.guests} Guests Allowed
+              </li>
+            </ul>
+            <div className="">
+              <div className="text-2xl xl:text-3xl flex gap-1 items-center py-3">
+                {listItem.pricePerNight}
+                <div className="text-sm">/night</div>
+              </div>
+              <div className="w-max bg-sky-500 font-bold my-1 text-gray-50 xl:text-xl hover:bg-gray-300 hover:text-gray-950 shadow-sm shadow-gray-400 p-2 box-border">
+                <Link
+                  to="/book/:id"
+                  className=""
+                >
+                  Book Now
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </>

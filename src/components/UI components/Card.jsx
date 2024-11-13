@@ -16,10 +16,10 @@ const Card = (props) => {
         alt={props.item.title + " icon"}
       />
       <div className="flex flex-col w-max px-2">
-        <span className="font-bold text-sm sm:text-base flex justify-between items-center mt-2">
+        <span className="font-bold text-lg sm:text-lg flex justify-between items-center mt-2">
           {props.item.title}, {props.item.location}
         </span>
-        <span className="font-normal text-xs flex items-center">{`⭐${props.item.rating}/5`}</span>
+        <span className="font-normal text-xs flex items-center">{`⭐${props.item.rating} / 5`}</span>
         <span className="text-xs sm:text-sm font-bold mt-1">
           Type: <span className="font-normal">{props.item.type}</span>
         </span>
