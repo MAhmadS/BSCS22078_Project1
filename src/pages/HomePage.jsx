@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Categories from "../components/Categories";
 import ListingCard from "../components/ListingCard";
 import SearchBar from "../components/SearchBar";
+import Loading from "../components/UI components/Loading";
 
 const HomePage = () => {
   const [listItems, setListItems] = useState([]);
@@ -30,7 +31,8 @@ const HomePage = () => {
     <>
       <SearchBar />
       <Categories setSelCategory={setSelCategory} />
-      <ListingCard listItems={listItems} />
+      {!listItems && listItems.length === 0 && <Loading />}
+      {listItems && <ListingCard listItems={listItems} />}
     </>
   );
 };

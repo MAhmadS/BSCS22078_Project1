@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import Loading from "../components/UI components/Loading";
 
 const ListingDetails = () => {
   const [listItem, setListItem] = useState(null);
@@ -33,7 +34,7 @@ const ListingDetails = () => {
     // pricePerNight: "$500",
     // rating: "5",
     <>
-      {!listItem && <div>Loading...</div>}
+      {!listItem && <Loading />}
       {listItem && (
         <div className="grid md:grid-cols-2 py-5 justify-center items-center gap-5">
           <img
@@ -66,8 +67,7 @@ const ListingDetails = () => {
               </div>
               <div className="w-max bg-sky-500 font-bold my-1 text-gray-50 xl:text-xl hover:bg-gray-300 hover:text-gray-950 shadow-sm shadow-gray-400 p-2 box-border">
                 <Link
-                  to="/book/:id"
-                  className=""
+                  to={`/book/${listItem.id}`}
                 >
                   Book Now
                 </Link>

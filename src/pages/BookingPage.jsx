@@ -1,9 +1,188 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const BookingPage = () => {
   const id = useParams().id;
-  return <div>BookingPage of {id}</div>;
+  const [item, setItem] = useState({});
+  const [previousCheckOut, setPreviousCheckOut] = useState("");
+  const [previousCheckIn, setPreviousCheckIn] = useState("");
+
+  const inputStyle = "border border-sky-500 text-base px-1 py-0.5";
+  const dateDiff = (date1, date2) => {
+    const date_1 = new Date(date1);
+    const date_2 = new Date(date2);
+    const dateDiff = date_2 - date_1;
+    console.log(dateDiff);
+    return dateDiff;
+  };
+  const getDate = (increment = 0) => {
+    const curr = new Date();
+    curr.setDate(curr.getDate() + increment)
+    const date = curr.toISOString().substring(0, 10);
+    return date;
+  };
+
+  //form state mgmt.
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    checkIn: "",
+    checkOut: "",
+  });
+
+  const handleChange = (e) => {
+    setPreviousCheckIn(formData.checkIn);
+    setPreviousCheckOut(formData.checkOut);
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    const fetchItem = async () => {
+      try {
+        const itemData = await fetch(
+          `http://localhost:5000/api/listings/${id}`
+        );
+        const item = await itemData.json();
+        setItem(item);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchItem();
+  }, []);
+
+  useEffect(() => {
+    setFormData({ ...formData, checkIn: getDate(), checkOut: getDate(1) });
+  }, []);
+
+  useEffect(() => {
+    const date = getDate();
+    if (dateDiff(date, formData.checkIn) < 0) {
+      setFormData({ ...formData, checkIn: previousCheckIn });
+    } else if (dateDiff(formData.checkIn, formData.checkOut) <= 0) {
+      setFormData({ ...formData, checkIn: previousCheckIn });
+    }
+  }, [formData.checkIn]);
+
+  useEffect(() => {
+    if (dateDiff(formData.checkIn, formData.checkOut) <= 0) {
+      setFormData({ ...formData, checkOut: previousCheckOut });
+    }
+  }, [formData.checkOut]);
+
+  return (
+    <div className="py-10 my-10">
+      <form className="flex flex-col md:flex-row items-center gap-5 justify-around" onSubmit={formSubmitHandler}>
+        <div className="w-full md:w-max flex flex-col gap-5 bg-white md:p-5">
+          <h1 className="text-xl font-bold">
+            Booking for {item.type} in {item.title}, {item.location}
+          </h1>
+          <div className="flex flex-col md:flex-row gap-5 justify-start md:items-center">
+            <div className="flex flex-col gap-1">
+              <label>Name</label>
+              <input
+                className="border border-sky-500 text-base px-1 py-0.5"
+                name="name"
+                placeholder="Enter your name"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label>Email</label>
+              <input
+                className={inputStyle}
+                name="email"
+                placeholder="Enter your email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="flex flex-col gap-1">
+            <label>Phone</label>
+            <input
+              className={inputStyle}
+              name="phone"
+              placeholder="Enter your phone number"
+              type="tel"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="flex flex-col md:flex-row gap-5 justify-start md:items-center">
+            <div className="flex flex-col gap-1">
+              <label>Check In</label>
+              <input
+                className={inputStyle}
+                name="checkIn"
+                type="date"
+                value={formData.checkIn}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label>Check Out</label>
+              <input
+                className={inputStyle}
+                name="checkOut"
+                type="date"
+                value={formData.checkOut}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <div className="p-5 bg-gray-200 w-full md:w-1/2">
+          <h1 className="font-bold text-xl">Summary of Your Reservation</h1>
+          <ul className="p-2 flex flex-col gap-2 list-disc m-2">
+            <li className="font-bold">
+              Property Type: <span className="font-normal">{item.type}</span>
+            </li>
+            <li className="font-bold">
+              Location:{" "}
+              <span className="font-normal">
+                {item.title}, {item.location}
+              </span>
+            </li>
+            <li className="font-bold">
+              Check In Date:{" "}
+              <span className="font-normal">
+                {formData.checkIn ? formData.checkIn : "Not Selected"}
+              </span>
+            </li>
+            <li className="font-bold">
+              Check Out Date:{" "}
+              <span className="font-normal">
+                {formData.checkOut ? formData.checkOut : "Not Selected"}
+              </span>
+            </li>
+            <li className="font-bold">
+              Stay for{" "}
+              <span className="text-xl">
+                {Math.floor(
+                  dateDiff(formData.checkIn, formData.checkOut) /
+                    (1000 * 60 * 60 * 24)
+                )}
+              </span>{" "}
+              night(s)
+            </li>
+          </ul>
+          <button type="submit" className="bg-sky-500 px-1 py-2 w-full hover:bg-gray-300 hover:text-gray-900 font-bold text-gray-200">
+            Book Now
+          </button>
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default BookingPage;
