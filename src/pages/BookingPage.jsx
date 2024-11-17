@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const BookingPage = () => {
+  const navigate = useNavigate();
   const id = useParams().id;
   const [item, setItem] = useState({});
   const [previousCheckOut, setPreviousCheckOut] = useState("");
   const [previousCheckIn, setPreviousCheckIn] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [totalDays, setTotalDays] = useState(1);
 
   const inputStyle = "border border-sky-500 text-base px-1 py-0.5";
   const dateDiff = (date1, date2) => {
     const date_1 = new Date(date1);
     const date_2 = new Date(date2);
     const dateDiff = date_2 - date_1;
-    console.log(dateDiff);
     return dateDiff;
   };
+
   const getDate = (increment = 0) => {
     const curr = new Date();
-    curr.setDate(curr.getDate() + increment)
+    curr.setDate(curr.getDate() + increment);
     const date = curr.toISOString().substring(0, 10);
     return date;
   };
@@ -37,6 +41,24 @@ const BookingPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const formSubmitHandler = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await axios.post("http://localhost:5000/api/bookings", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      alert("Booking Successful");
+      navigate("/listings/" + id); 
+    } catch (err) {
+      alert(err.message);
+      console.log(err);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
     const fetchItem = async () => {
       try {
@@ -52,6 +74,7 @@ const BookingPage = () => {
     fetchItem();
   }, []);
 
+  //form dates valudation
   useEffect(() => {
     setFormData({ ...formData, checkIn: getDate(), checkOut: getDate(1) });
   }, []);
@@ -71,9 +94,20 @@ const BookingPage = () => {
     }
   }, [formData.checkOut]);
 
+  useEffect(() => {
+    setTotalDays(
+      Math.floor(
+        dateDiff(formData.checkIn, formData.checkOut) / (1000 * 60 * 60 * 24)
+      ).toString()
+    );
+  }, [formData.checkOut, formData.checkIn]);
+
   return (
     <div className="py-10 my-10">
-      <form className="flex flex-col md:flex-row items-center gap-5 justify-around" onSubmit={formSubmitHandler}>
+      <form
+        className="flex flex-col md:flex-row items-center gap-5 justify-around"
+        onSubmit={formSubmitHandler}
+      >
         <div className="w-full md:w-max flex flex-col gap-5 bg-white md:p-5">
           <h1 className="text-xl font-bold">
             Booking for {item.type} in {item.title}, {item.location}
@@ -166,18 +200,14 @@ const BookingPage = () => {
               </span>
             </li>
             <li className="font-bold">
-              Stay for{" "}
-              <span className="text-xl">
-                {Math.floor(
-                  dateDiff(formData.checkIn, formData.checkOut) /
-                    (1000 * 60 * 60 * 24)
-                )}
-              </span>{" "}
-              night(s)
+              Stay for <span className="text-xl">{totalDays}</span> night(s)
             </li>
           </ul>
-          <button type="submit" className="bg-sky-500 px-1 py-2 w-full hover:bg-gray-300 hover:text-gray-900 font-bold text-gray-200">
-            Book Now
+          <button
+            type="submit"
+            className="bg-sky-500 px-1 py-2 w-full hover:bg-gray-300 hover:text-gray-900 font-bold text-gray-200"
+          >
+            {loading ? "Booking..." : "Book Now"}
           </button>
         </div>
       </form>
