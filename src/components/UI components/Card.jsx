@@ -11,7 +11,7 @@ const Card = (props) => {
   return (
     <Link className="flex flex-col w-full" to={`/listings/${props.item.id}`}>
       <img
-        className="rounded-2xl w-screen sm:w-60 sm:h-60 h-full object-cover"
+        className="rounded-2xl w-screen md:h-60 h-full object-center object-cover"
         src={props.item.img}
         alt={props.item.title + " icon"}
       />

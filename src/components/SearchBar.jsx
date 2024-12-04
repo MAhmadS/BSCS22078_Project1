@@ -5,7 +5,6 @@ const SearchBar = ({setSearchText}) => {
   const submitHandler = (e) => {
     e.preventDefault();
     setSearchText(input);
-    setInput("");
   };
 
   return (

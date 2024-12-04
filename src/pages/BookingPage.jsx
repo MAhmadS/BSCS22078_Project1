@@ -29,6 +29,7 @@ const BookingPage = () => {
 
   //form state mgmt.
   const [formData, setFormData] = useState({
+    listingId: id,
     name: "",
     email: "",
     phone: "",
@@ -46,11 +47,16 @@ const BookingPage = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/bookings", formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/bookings",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       alert("Booking Successful");
       navigate("/listings/" + id);
     } catch (err) {
