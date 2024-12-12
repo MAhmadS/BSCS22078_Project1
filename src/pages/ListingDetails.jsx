@@ -4,6 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import Loading from "../components/UI components/Loading";
 
 const ListingDetails = () => {
+  console.log("ListingDetails.jsx");
+  const BACKEND_URL = "http://localhost:5000";
   const [listItem, setListItem] = useState(null);
   const id = useParams().id;
 
@@ -11,7 +13,7 @@ const ListingDetails = () => {
     const getItem = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/listings/${id}`
+          BACKEND_URL + `/api/listings/${id}`
         );
         console.log(response.data);
         setListItem(response.data);
@@ -39,7 +41,7 @@ const ListingDetails = () => {
         <div className="grid md:grid-cols-2 py-5 justify-center items-center gap-5">
           <img
             className="border-sky-500 border-2 p-0.5 ml-auto justify-self-right h-full max-h-96"
-            src={listItem.img}
+            src={BACKEND_URL + "/" + listItem.img}
             alt={listItem.title + "'s Icon"}
           />
           <div className="m-auto w-full xl:w-3/4">

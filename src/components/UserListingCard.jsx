@@ -1,7 +1,11 @@
 import React from "react";
 import Card from "./UI components/Card";
 
-const ListingCard = (props) => {
+const UserListingCard = (props) => {
+  const removeItem = (id) => {
+    props.setListItems(props.listItems.filter((item) => item.id !== id));
+  };
+
   return (
     // <div className="grid gri gap-6">
     /* <div className="my-5 flex justify-center gap-6 flex-wrap"> */
@@ -10,10 +14,15 @@ const ListingCard = (props) => {
       style={{ gridTemplateColumns: "repeat(auto-fit, minmax(300px, 0.5fr)" }}
     >
       {props.listItems.map((item) => (
-        <Card key={item.id} item={item} />
+        <Card
+          key={item.id}
+          item={item}
+          allowDelete={true}
+          removeItem={removeItem}
+        />
       ))}
     </div>
   );
 };
 
-export default ListingCard;
+export default UserListingCard;
