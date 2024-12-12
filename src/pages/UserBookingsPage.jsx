@@ -7,13 +7,16 @@ import { AuthContext } from "../context/AuthContext";
 import NothingToShow from "../components/UI components/NothingToShow";
 import Error from "../components/UI components/Error";
 
-
 const UserBookingsPage = () => {
   const authContext = useContext(AuthContext);
   const userId = useParams().userId;
-  const BACKEND_URL = "http://localhost:5000";
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [listItems, setListItems] = useState(null);
   const [error, setError] = useState(false);
+
+  const removeBooking = (bookingId) => {
+    setListItems(listItems.filter((item) => item.id !== bookingId));
+  };
 
   useEffect(() => {
     const getListItems = async () => {
@@ -39,9 +42,11 @@ const UserBookingsPage = () => {
   return (
     <>
       {!listItems && !error && <Loading />}
-      {!listItems && error && <Error/>}
+      {!listItems && error && <Error />}
       {listItems && listItems.length === 0 && <NothingToShow />}
-      {listItems && listItems.length > 0 && <BookingTable bookings={listItems} />}
+      {listItems && listItems.length > 0 && (
+        <BookingTable bookings={listItems} removeBooking={removeBooking} />
+      )}
     </>
   );
 };

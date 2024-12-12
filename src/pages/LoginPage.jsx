@@ -6,7 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 const LoginPage = () => {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
-  const BACKEND_URL = "http://localhost:5000";
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [formData, setFormData] = useState({
     email: "",
     password: "",

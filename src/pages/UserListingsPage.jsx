@@ -9,7 +9,7 @@ import Error from "../components/UI components/Error";
 
 const UserListingsPage = () => {
   const authContext = useContext(AuthContext);
-  const BACKEND_URL = "http://localhost:5000";
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const userId = useParams().userId;
   const [listItems, setListItems] = useState(null);
   const [error, setError] = useState(false);
@@ -40,7 +40,7 @@ const UserListingsPage = () => {
       {!listItems &&  !error &&<Loading />}
       {!listItems && error  && <Error />}
       {listItems && listItems.length === 0 && <NothingToShow />}
-      {listItems && listItems.length > 0 && (
+      {listItems && (
         <Link
           to="/listing/add"
           className="p-2 px-4 text-2xl font-bold bg-sky-500 text-white rounded-3xl fixed top-full left-full -translate-x-20 -translate-y-20"
@@ -48,7 +48,7 @@ const UserListingsPage = () => {
           +
         </Link>
       )}
-      {listItems && <UserListingCard listItems={listItems} setListItems={setListItems} />}
+      {listItems && listItems.length > 0 && <UserListingCard listItems={listItems} setListItems={setListItems} />}
     </>
   );
 };

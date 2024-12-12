@@ -38,8 +38,8 @@ const FooterLinks = () => {
           <span className="hover:underline">English</span>
         </button>
         <button>
-          <span>$</span>
-          <span className="hover:underline">USD</span>
+          <span>Rs. </span>
+          <span className="hover:underline">PKR</span>
         </button>
         <a href="/">
           <svg

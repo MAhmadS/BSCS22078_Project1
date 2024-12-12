@@ -4,16 +4,23 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 
 // Table component to display booking information
-const BookingTable = ({ bookings }) => {
+const BookingTable = ({ bookings, removeBooking }) => {
+  const ADMIN_ID = import.meta.env.VITE_ADMIN_ID;
   const authContext = useContext(AuthContext);
-  const BACKEND_URL = "http://localhost:5000";
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const deleteHandler = async (id) => {
     try {
-      await axios.delete(BACKEND_URL + "/api/bookings/" + id, {
-        headers: {
-          Authorization: "Bearer " + authContext.token,
-        },
-      });
+      await axios.delete(
+        authContext.user.userId !== ADMIN_ID
+          ? BACKEND_URL + "/api/bookings/" + id
+          : BACKEND_URL + "/api/bookings/admin/" + id,
+        {
+          headers: {
+            Authorization: "Bearer " + authContext.token,
+          },
+        }
+      );
+      removeBooking(id);
       console.log("Booking Removed Successfully");
     } catch (err) {
       console.log("Error Removing Booking");

@@ -6,7 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 const SignupPage = () => {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
-  const BACKEND_URL = "http://localhost:5000";
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [formData, setFormData] = useState({
     avatar: "1",
     name: "",

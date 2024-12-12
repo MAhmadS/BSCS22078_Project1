@@ -32,7 +32,7 @@ const Navbar = () => {
             className="hover:text-black w-max"
             to={"/admin/bookings/"}
           >
-            Admin Bookings
+            Manage Bookings
           </Link>
 
           {authContext.user.role === "host" && (
@@ -40,7 +40,7 @@ const Navbar = () => {
               className="hover:text-black w-max"
               to={"/admin/listings/"}
             >
-              Admin Listings
+              Manage Listings
             </Link>
           )}
         </ul>

@@ -4,15 +4,23 @@ import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 
 const Card = (props) => {
+  const ADMIN_ID = import.meta.env.VITE_ADMIN_ID;
   const authContext = useContext(AuthContext);
-  const BACKEND_URL = "http://localhost:5000";
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const deleteHandler = async (id) => {
     try {
-      await axios.delete(BACKEND_URL + "/api/listings/" + id, {
-        headers: {
-          Authorization: "Bearer " + authContext.token,
-        },
-      });
+      await axios.delete(
+        `${
+          authContext.user.userId !== ADMIN_ID
+            ? BACKEND_URL + "/api/listings/" + id
+            : BACKEND_URL + "/api/listings/admin/" + id
+        }`,
+        {
+          headers: {
+            Authorization: "Bearer " + authContext.token,
+          },
+        }
+      );
       alert("Listing Removed Successfully");
       props.removeItem(id);
     } catch (err) {

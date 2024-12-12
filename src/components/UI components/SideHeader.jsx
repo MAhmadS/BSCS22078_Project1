@@ -15,9 +15,11 @@ const SideHeader = () => {
 
   return (
     <ul className="flex items-center gap-4">
-      <li className="p-3 rounded-lg hover:bg-gray-100 transition hidden sm:inline">
-        <Link to="/listing/add">Rent your home</Link>
-      </li>
+      {authContext.isLoggedIn && authContext.user.role === "host" && (
+        <li className="p-3 rounded-lg hover:bg-gray-100 transition hidden sm:inline">
+          <Link to="/listing/add">Rent your home</Link>
+        </li>
+      )}
       <li className="relative">
         <div
           className="flex items-center gap-3 cursor-pointer p-3 rounded-lg shadow hover:bg-gray-100 transition"

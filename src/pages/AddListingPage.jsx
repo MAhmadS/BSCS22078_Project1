@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const AddListingPage = () => {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
-  const BACKEND_URL = "http://localhost:5000";
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [formData, setFormData] = useState({
     title: "",
     location: "",
@@ -58,7 +58,11 @@ const AddListingPage = () => {
       );
       console.log("Listing added successfully:", response.data);
       alert("Listing added successfully!");
-      navigate("/listings/user/" + authContext.user.userId);
+      if (authContext.user.userId === import.meta.env.VITE_ADMIN_ID) {
+        navigate("/listings/admin");
+      } else {
+        navigate("/listings/user/" + authContext.user.userId);
+      }
     } catch (error) {
       console.error("Error adding listing:", error);
     }

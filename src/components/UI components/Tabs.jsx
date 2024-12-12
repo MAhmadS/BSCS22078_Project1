@@ -12,10 +12,17 @@ const Tabs = (props) => {
           <button
             key={index}
             onClick={() => {
-              props.setSelCategory(tabItem.name);
-              console.log("Selected Category: " + tabItem.name);
+              if (props.category === tabItem.name) {
+                props.setSelCategory("");
+              } else {
+                props.setSelCategory(tabItem.name);
+              }
             }}
-            className="flex flex-col items-center bg-transparent text-gray-500 border-b-2 box-border focus:border-black focus:text-black hover:text-black pb-3 whitespace-nowrap"
+            className={` flex flex-col items-center bg-transparent text-gray-500 border-b-2 box-border hover:text-black pb-3 whitespace-nowrap ${
+              props.category === tabItem.name
+                ? "border-black text-black"
+                : ""
+            }`}
           >
             {tabItem.img ? (
               <img

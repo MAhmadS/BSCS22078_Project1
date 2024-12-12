@@ -106,7 +106,7 @@ function App() {
         <Route exact path="/listing/add" element={<AddListingPage />} />
         <Route exact path="/book/:id" element={<BookingPage />} />
         <Route exact path="/admin/bookings/" element={<AdminBookingsPage />} />
-        <Route exact path="//admin/listings/" element={<AdminListingsPage />} />
+        <Route exact path="/admin/listings/" element={<AdminListingsPage />} />
         <Route exact path="/listings/:id" element={<ListingDetails />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>

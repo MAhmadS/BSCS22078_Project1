@@ -5,7 +5,7 @@ import Loading from "../components/UI components/Loading";
 
 const ListingDetails = () => {
   console.log("ListingDetails.jsx");
-  const BACKEND_URL = "http://localhost:5000";
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [listItem, setListItem] = useState(null);
   const id = useParams().id;
 

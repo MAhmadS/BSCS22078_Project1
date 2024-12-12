@@ -38,7 +38,7 @@ const Footer = () => {
     },
   ];
   return (
-    <footer className="bg-stone-100 w-screen -mx-8 p-8">
+    <footer className="bg-stone-100 overflow-x-hidden -mx-8 p-8">
       <h3 className="text-2xl">Inspiration for future getaways</h3>
       <Tabs tabItems={tabItems} />
       <FooterList />

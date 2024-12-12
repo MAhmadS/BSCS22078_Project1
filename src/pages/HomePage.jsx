@@ -8,7 +8,8 @@ import NothingToShow from "../components/UI components/NothingToShow";
 import Error from "../components/UI components/Error";
 
 const HomePage = () => {
-  const BACKEND_URL = "http://localhost:5000";
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  console.log("Backend URL: ", BACKEND_URL);
   const [listItems, setListItems] = useState(null);
   const [selCategory, setSelCategory] = useState("");
   const [searchText, setSearchText] = useState("");
@@ -37,7 +38,11 @@ const HomePage = () => {
 
   useEffect(() => {
     if (listItems === null) return;
-    const updatedData = listItems.filter((item) => item.id % 2 === 0);
+    if (selCategory === "") {
+      setListItems(null);
+      return;
+    }
+    const updatedData = listItems.filter((item) => item.type === selCategory);
     setListItems(updatedData);
   }, [selCategory]);
 
@@ -52,13 +57,16 @@ const HomePage = () => {
         setError(error);
       }
     };
-    getListItems();
-  }, []);
+    if (selCategory === "") {
+      getListItems();
+    }
+  }, [selCategory]);
 
+  console.log(listItems);
   return (
     <>
       <SearchBar setSearchText={handleSearch} />
-      <Categories setSelCategory={setSelCategory} />
+      <Categories category={selCategory} setSelCategory={setSelCategory} />
       {!listItems && error && <Error />}
       {!listItems && !error && <Loading />}
       {listItems && listItems.length === 0 && <NothingToShow />}
