@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
+const ADMIN_ID = import.meta.env.VITE_ADMIN_ID;
+
 const SideHeader = () => {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
@@ -54,8 +56,10 @@ const SideHeader = () => {
                   {authContext.user.name}
                 </div>
                 <div className="text-sky-500 font-medium -my-1">
-                  {authContext.user.role.charAt(0).toUpperCase() +
-                    authContext.user.role.slice(1)}
+                  {authContext.user.userId !== ADMIN_ID
+                    ? authContext.user.role.charAt(0).toUpperCase() +
+                      authContext.user.role.slice(1)
+                    : "Admin"}
                 </div>
               </div>
             </div>
@@ -76,7 +80,7 @@ const SideHeader = () => {
             className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-md shadow-gray-500 border border-gray-400"
             onClick={() => setDropdown(false)}
           >
-            {authContext.isLoggedIn ? (
+            {authContext.isLoggedIn && authContext.user.userId !== ADMIN_ID && (
               <>
                 <Link
                   className="block px-4 py-2 text-gray-700 hover:bg-sky-500 hover:text-white rounded-t-lg"
@@ -102,7 +106,35 @@ const SideHeader = () => {
                   Logout
                 </button>
               </>
-            ) : (
+            )}
+            {authContext.isLoggedIn && authContext.user.userId === ADMIN_ID && (
+              <>
+                <Link
+                  className="block px-4 py-2 text-gray-700 hover:bg-sky-500 hover:text-white rounded-t-lg"
+                  to={`/admin/bookings/`}
+                >
+                  Admin Bookings
+                </Link>
+                {authContext.user.role === "host" && (
+                  <Link
+                    className="block px-4 py-2 text-gray-700 hover:bg-sky-500 hover:text-white"
+                    to={`/admin/listings/`}
+                  >
+                    Admin Listings
+                  </Link>
+                )}
+                <button
+                  className="block px-4 py-2 text-gray-700 hover:bg-sky-500 hover:text-white rounded-b-lg w-full text-left"
+                  onClick={() => {
+                    authContext.logout();
+                    navigate("/");
+                  }}
+                >
+                  Logout
+                </button>
+              </>
+            )}
+            {!authContext.isLoggedIn && (
               <>
                 <Link
                   className="block px-4 py-2 text-gray-700 hover:bg-sky-500 hover:text-white rounded-t-lg"

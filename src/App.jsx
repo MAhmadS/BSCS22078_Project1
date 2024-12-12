@@ -17,8 +17,12 @@ import { useCallback, useEffect, useState } from "react";
 import LoginPage from "./pages/LoginPage";
 import UserListingsPage from "./pages/UserListingsPage";
 import AddListingPage from "./pages/AddListingPage";
+import AdminHomePage from "./pages/admin/AdminHomePage";
+import AdminBookingsPage from "./pages/admin/AdminBookingsPage";
+import AdminListingsPage from "./pages/admin/AdminListingsPage";
 
 function App() {
+  const ADMIN_ID = import.meta.env.VITE_ADMIN_ID;
   let tokenTimer;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(null);
@@ -79,7 +83,7 @@ function App() {
   }, [login]);
 
   let routes;
-  if (isLoggedIn) {
+  if (isLoggedIn && user.userId !== ADMIN_ID) {
     routes = (
       <Routes>
         <Route exact path="/" element={<HomePage />} />
@@ -91,6 +95,18 @@ function App() {
           path="/listings/user/:userId"
           element={<UserListingsPage />}
         />
+        <Route exact path="/listings/:id" element={<ListingDetails />} />
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    );
+  } else if (isLoggedIn && user.userId === ADMIN_ID) {
+    routes = (
+      <Routes>
+        <Route exact path="/" element={<AdminHomePage />} />
+        <Route exact path="/listing/add" element={<AddListingPage />} />
+        <Route exact path="/book/:id" element={<BookingPage />} />
+        <Route exact path="/admin/bookings/" element={<AdminBookingsPage />} />
+        <Route exact path="//admin/listings/" element={<AdminListingsPage />} />
         <Route exact path="/listings/:id" element={<ListingDetails />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
