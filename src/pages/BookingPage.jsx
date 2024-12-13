@@ -116,7 +116,9 @@ const BookingPage = () => {
 
   useEffect(() => {
     if (!item) return;
-    setTotalAmount("$" + totalDays * parseInt(item.pricePerNight.substring(1)));
+    setTotalAmount(
+      "Rs. " + parseInt(totalDays) * parseInt(item.pricePerNight.substring(3))
+    );
   }, [totalDays]);
 
   // useEffect(() => {

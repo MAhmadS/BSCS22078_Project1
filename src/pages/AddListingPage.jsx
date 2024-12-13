@@ -59,7 +59,7 @@ const AddListingPage = () => {
       console.log("Listing added successfully:", response.data);
       alert("Listing added successfully!");
       if (authContext.user.userId === import.meta.env.VITE_ADMIN_ID) {
-        navigate("/listings/admin");
+        navigate("/admin/listings/");
       } else {
         navigate("/listings/user/" + authContext.user.userId);
       }
